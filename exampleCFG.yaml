@@ -1,0 +1,14 @@
+prods:
+    - "A -> a A | b B | $"
+    - "B -> a A | b B"
+    - "C -> a D | b C"
+    - "C -> $"
+    - "D -> a D | b C"
+    - "S -> b C | a A | $"
+
+checks:
+    - ab
+    - aab
+    - ab
+    - b
+    - abab
