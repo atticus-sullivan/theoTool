@@ -39,3 +39,8 @@ Required keys:
 Optional keys:
 - "check": should be list[str] with a list of strings that are to be checked
   (here no spaces are needed in between the symbols)
+
+
+Credits
+-------
+Credits to [pyformlang](https://github.com/Aunsiels/pyformlang)
