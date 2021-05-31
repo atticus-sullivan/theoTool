@@ -33,7 +33,7 @@ See `exampleCFG.yaml` for an example
 Required keys:
 - "prods": should be a list of strings, which represent the productions. A
   production should be of the form "Var -> term Var term | Var term Var | $". A
-  $ represents an epsilon, symbols should be separated by a space, terminals
+  `$` represents an epsilon, symbols should be separated by a space, terminals
   start with a lower case char and Non-terminals with an upper case char
 
 Optional keys:
