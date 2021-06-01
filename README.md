@@ -40,6 +40,8 @@ Optional keys:
 - "check": should be list[str] with a list of strings that are to be checked
   (here no spaces are needed in between the symbols)
 
+Please note that by default the Nonterminal `S` will be the Axiom
+
 pda.yaml
 ---------
 See `example.yaml` for an example
