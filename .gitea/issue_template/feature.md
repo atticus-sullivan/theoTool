@@ -1,6 +1,6 @@
 ---
 
-name: "Featurerequest"
+name: "Feature Request"
 about: "Request a feature"
 title: "Title"
 labels:
