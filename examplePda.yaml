@@ -1,0 +1,8 @@
+
+delta:
+    - q,'a',Z0,q,X
+    - q,'a',X,q,X,X
+    - q,'a',Z0,q,
+
+initial: q
+startStack: Z0

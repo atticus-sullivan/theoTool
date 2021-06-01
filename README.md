@@ -40,6 +40,20 @@ Optional keys:
 - "check": should be list[str] with a list of strings that are to be checked
   (here no spaces are needed in between the symbols)
 
+pda.yaml
+---------
+See `example.yaml` for an example
+
+Required keys:
+- "prods": should be a list of tuples based on this template
+  `srcState,symbol,stackSymb,dstState,` afterwards as many stackSymbols
+  as needed can follow.
+- "initial": the initial state
+- "startStack": stackSymb which is on the Stack from the beginning
+
+Regarding the `tex` template which may be printed on execution: Each loop has a
+key `ownLoop=90` this creates a loop which is centered at `90` degrees. Enter
+another Number to rotate the loop.
 
 Credits
 -------

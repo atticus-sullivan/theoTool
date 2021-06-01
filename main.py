@@ -2,6 +2,7 @@ import sys
 import argparse
 from cfg import Cfg
 from fa import AutomataRegul
+from pda import Pda
 
 import config
 
@@ -14,8 +15,8 @@ if __name__ == "__main__":
     parser.add_argument("--startLen", "-s", help="Minimum length of the words to check [DEFAULT: %(default)s]", nargs='?', type=int, default=1)
     parser.add_argument("--endLen", "-e", help="Maximum length of the words to check [DEFAULT: %(default)s]", nargs='?', type=int, default=5)
     parser.add_argument("--check", "-c", help="Check input words via the 'checkL' function", action='store_true')
-    parser.add_argument("--type", "-t", help="Set type of input", choices=['fa', 'dfa', 'nfa', 'cfg'], default='fa')
-    parser.add_argument("--input", "-i", help="Use stdin as input (input is requested at the beginning, is simulated as batch afterwards)", action='store_true')
+    parser.add_argument("--type", "-t", help="Set type of input", choices=['fa', 'dfa', 'nfa', 'cfg', 'pda'], default='fa')
+    parser.add_argument("--input", "-i", help="Use stdin as input for checks (input is requested at the beginning, is simulated as batch afterwards)", action='store_true')
 
     args = parser.parse_args()
 
@@ -24,6 +25,8 @@ if __name__ == "__main__":
         print("regex:", ele.toRegex())
     elif args.type in ['cfg']:
         ele = Cfg.load(args.inFile)
+    elif args.type in ['pda']:
+        ele = Pda.load(args.inFile)
     else:
         quit(-1)
     
