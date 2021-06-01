@@ -1,4 +1,4 @@
-For usage, check the "-h" flag.
+For usage, check the `-h` flag.
 
 Tipp: You may use the `config.py` file to speficy `checkL(i:str)` a function to check if a word
 should be accepted or not (this can be a function using regexes, a static
@@ -32,12 +32,12 @@ automata.yaml
 See `exampleFA.yaml` for an example
 
 Required keys:
-- "delta": should be a list of srcState,char,dstState
-- "initial": should be a state
-- "accepting": should be a list of states
+- `delta`: should be a list of srcState,char,dstState
+- `initial`: should be a state
+- `accepting`: should be a list of states
 
 Optional keys:
-- "check": should be list[str] with a list of strings that are to be checked
+- `check`: should be list[str] with a list of strings that are to be checked
 
 
 cfg.yaml
@@ -45,13 +45,13 @@ cfg.yaml
 See `exampleCFG.yaml` for an example
 
 Required keys:
-- "prods": should be a list of strings, which represent the productions. A
-  production should be of the form "Var -> term Var term | Var term Var | $". A
+- `prods`: should be a list of strings, which represent the productions. A
+  production should be of the form `"Var -> term Var term | Var term Var | $"`. A
   `$` represents an epsilon, symbols should be separated by a space, terminals
   start with a lower case char and Non-terminals with an upper case char
 
 Optional keys:
-- "check": should be list[str] with a list of strings that are to be checked
+- `check`: should be list[str] with a list of strings that are to be checked
   (here no spaces are needed in between the symbols)
 
 Please note that by default the Nonterminal `S` will be the Axiom
@@ -61,11 +61,11 @@ pda.yaml
 See `example.yaml` for an example
 
 Required keys:
-- "prods": should be a list of tuples based on this template
+- `prods`: should be a list of tuples based on this template
   `srcState,symbol,stackSymb,dstState,` afterwards as many stackSymbols
   as needed can follow.
-- "initial": the initial state
-- "startStack": stackSymb which is on the Stack from the beginning
+- `initial`: the initial state
+- `startStack`: stackSymb which is on the Stack from the beginning
 
 Regarding the `tex` template which may be printed on execution: Each loop has a
 key `ownLoop=90` this creates a loop which is centered at `90` degrees. Enter
