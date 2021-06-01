@@ -15,6 +15,9 @@ This defaults to a linear function with slope `1`
 **WARNING:** If using the export to tex/dot be carefull, currently there is no
 check if the files already exist, they are simply overwritten.
 
+And please don't take the results for granted, as of now, I'm pretty sure this
+should work. But there's never complete safety.
+
 Installation
 ============
 Note that there is a `requirements.txt`, which states the python packages
