@@ -4,7 +4,7 @@ from pyformlang.finite_automaton import EpsilonNFA, State, Symbol, Epsilon
 
 def make_tuple(i:str):
     s = i.split(",")
-    return s[0:3]
+    return tuple(s[0:3])
 
 class AutomataRegul(Ele):
     def __init__(self, checks:list[str], aut:EpsilonNFA):
@@ -66,7 +66,7 @@ class AutomataRegul(Ele):
         stateD  = {}
         symbolD = {}
         if 'delta' not in d or not isinstance(d['delta'], list):
-            raise KeyError("delta key not defined in input")
+            raise KeyError("delta key not defined in input or not a list")
         else:
             for d1 in d['delta']:
                 t = make_tuple(d1)
