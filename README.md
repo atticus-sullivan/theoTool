@@ -12,6 +12,17 @@ be generated (this can be a mathematical function, a static dict or what ever
 you want, as long as it takes an int and returns an int)
 This defaults to a linear function with slope `1`
 
+**WARNING:** If using the export to tex/dot be carefull, currently there is no
+check if the files already exist, they are simply overwritten.
+
+Installation
+============
+Note that there is a `requirements.txt`, which states the python packages
+required to run this programm. Install via `pip install -r requirements.txt`
+
+
+Input files
+===========
 
 automata.yaml
 -----------
@@ -60,3 +71,8 @@ another Number to rotate the loop.
 Credits
 -------
 Credits to [pyformlang](https://github.com/Aunsiels/pyformlang)
+
+
+If any bugs or questions occure, simply write an issue with the corresponding
+template.
+Feel free to contribute and resove issues if you want ;)
