@@ -42,8 +42,16 @@ class Cfg(Ele):
         # preamble
         print(r"\documentclass[varwidth=true,multi=page, border=1cm]{standalone}", file=f)
         print(r"\usepackage{forest}", file=f)
+        print(r"\usepackage{array}", file=f)
         print(r"\newcommand{\spaceAbl}{3ex}", file=f)
         print(r"\begin{document}", file=f)
+        print(r"\begin{page}"+"\nKontextfreie Grammatik:\n\n"+r"$\begin{array}{r!{\to}l}", file=f)
+        for prod in self.cfg.productions:
+            if prod.body == []:
+                print(prod.head.value, "&" , r"\$", r"\\", file=f)
+            else:
+                print(prod.head.value, "&" , " ".join(list(map(lambda x: x.value, prod.body))), r"\\", file=f)
+        print(r"\end{array}$\end{page}", file=f)
         for string,tree,derivation in self.ts:
             print(r"\begin{page}", file=f)
             print("Wort: " + string + "\n", file=f)
