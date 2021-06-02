@@ -33,6 +33,15 @@ want to reuse your input yaml files, simply load the corresponding module of
 this project and work with the `cfg`/`enfa`/`pda` attributes of the
 corresponding class.
 
+Requirements
+============
+Installed packages:
+- pyformlang
+- pdflatex
+- dot (if you experience issues with the engines that are automatically run,
+  please let me know)
+- python3
+
 Installation
 ============
 Note that there is a `requirements.txt`, which states the python packages
