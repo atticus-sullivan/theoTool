@@ -5,6 +5,7 @@ from fa import AutomataRegul
 from pda import Pda
 from ele import genRandomWords
 import subprocess
+import os
 
 import config
 
@@ -80,10 +81,10 @@ if __name__ == "__main__":
         f.close()
         if args.build:
             print("Building latex -> pdf")
-            p = subprocess.Popen(["pdflatex", args.outBase+".tex"], stdout=(None if args.verbose >= 2 else open("/dev/null", "w")))
+            p = subprocess.Popen(["pdflatex", args.outBase+".tex"], stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
             p.wait()
             if ele.toDot(args.outBase+".dot"):
                 print("Building dot -> pdf")
                 for dotEng in ["dot", "neato", "twopi", "circo", "fdp", "sfdp", "osage"]:
-                    p = subprocess.Popen(["dot", "-o", args.outBase+"."+dotEng+".pdf", "-Tpdf", "-K"+dotEng, args.outBase+".dot"], stdout=(None if args.verbose >= 2 else open("/dev/null", "w")))
+                    p = subprocess.Popen(["dot", "-o", args.outBase+"."+dotEng+".pdf", "-Tpdf", "-K"+dotEng, args.outBase+".dot"], stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
                     p.wait()
