@@ -2,7 +2,7 @@ language simulator
 =================
 For usage, check the `-h` flag.
 
-###### Verbosity table
+##### Verbosity table
 |Num|Effect|
 --- | ---
 | 0 (default) | no additional info shown |
