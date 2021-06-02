@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--check", "-c", help="Check input words via the 'checkL' function", action='store_true')
     parser.add_argument("--type", "-t", help="Set type of input", choices=['fa', 'dfa', 'nfa', 'cfg', 'pda'], default='fa')
     parser.add_argument("--input", "-i", help="Use stdin as input for checks (input is requested at the beginning, is simulated as batch afterwards)", action='store_true')
+    parser.add_argument("--progress", help="Show progrssbar while simulating (only shows progess in terms of amount of words tested, words tested later will most probably teke longer time, since they mostly are longer (at least defaultRandom generated))", action='store_true')
 
     args = parser.parse_args()
 
@@ -41,12 +42,20 @@ if __name__ == "__main__":
         print("Valid terminal symbols: ", ele.terminals)
         gen = sys.stdin.read().splitlines()
         print()
+        l = len(gen)
     elif ele.checks != []:
         gen = ele.checks
+        l = len(gen)
     elif hasattr(config, 'genRandomWords'):
         gen = config.genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength, terminals=ele.terminals)
+        l = 0
+        for x in range(args.startLen,args.endLen):
+            l += cntPerLength(x)
     else:
         gen = genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength, terminals=ele.terminals)
+        l = 0
+        for x in range(args.startLen,args.endLen):
+            l += cntPerLength(x)
 
     if args.check:
         if hasattr(config, 'checkL'):
@@ -55,7 +64,7 @@ if __name__ == "__main__":
             raise Exception("checkL not implemented")
     else:
         checkL = lambda _: True # function is not relevant if check is not set
-    ele.checkAny(gen,checkL=checkL, check=args.check)
+    ele.checkAny(gen,checkL=checkL, check=args.check, l=l, progress=args.progress)
 
     if args.outBase == "-":
         quit(0)
