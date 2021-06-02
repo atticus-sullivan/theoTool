@@ -1,3 +1,5 @@
+language simulator
+=================
 For usage, check the `-h` flag.
 
 Tipp: You may use the `config.py` file to speficy `checkL(i:str)` a function to check if a word
