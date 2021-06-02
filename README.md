@@ -10,7 +10,7 @@ endLength (words with lengths between these two numbers are generated). With the
 function `cntPerLength(l:int)` you can specify how many words of a length should
 be generated (this can be a mathematical function, a static dict or what ever
 you want, as long as it takes an int and returns an int)
-This defaults to a linear function with slope `1`
+This defaults to `l -> l+1` (linear)
 
 The ``genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int],int], terminals:list[str]) -> Iterable[str]``
 function can be passed through `config.py` too. The function has to return a

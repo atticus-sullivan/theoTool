@@ -35,7 +35,7 @@ if __name__ == "__main__":
     if hasattr(config, 'cntPerLength'):
         cntPerLength = config.cntPerLength
     else:
-        cntPerLength = lambda l: l
+        cntPerLength = lambda l: l+1
 
     if args.input:
         print("Enter input, terminate with 'EOF', mostly sent by CTRL+D")

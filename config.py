@@ -26,7 +26,7 @@ def checkL(i:str):
 # determines how many words should be tested for a given length
 # maybe you'd like to choose a linear or a quadratic function
 def cntPerLength(l:int) -> int:
-    return l
+    return l+1
 
 # only in effect, if no checks argument is given in the input yaml
 # genrates the words that are checked. This is provided, since sometimes the
