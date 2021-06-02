@@ -27,6 +27,12 @@ check if the files already exist, they are simply overwritten.
 And please don't take the results for granted, as of now, I'm pretty sure this
 should work. But there's never complete safety.
 
+**Tipp:** If you want to work with `pyformlang` on your own (since some features
+like equivalence testing, conversion or "Schnitt" are not supported (yet)), but
+want to reuse your input yaml files, simply load the corresponding module of
+this project and work with the `cfg`/`enfa`/`pda` attributes of the
+corresponding class.
+
 Installation
 ============
 Note that there is a `requirements.txt`, which states the python packages
