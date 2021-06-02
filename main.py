@@ -9,6 +9,15 @@ import os
 
 import config
 
+# returns if file should be overwritten
+def askOverwrite(f:str, yes:bool) -> bool:
+    if not yes and os.path.exists(f):
+        print("\nFile",f , "does already exist.")
+        resp = input("Overwrite? (y/N) ")
+        if resp != "y":
+            return False
+    return True
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
             description="Simulate an CFG/FA with either given or random words. The CFG/FA is read from a YAML file. For a doc on this, see the README.md\nBy default the words are simply simulated and the result is printed. Then some sort of tex code can be printed and dot code is generated (see the parameter).",
@@ -23,6 +32,7 @@ if __name__ == "__main__":
     parser.add_argument("--progress", help="Show progrssbar while simulating (only shows progess in terms of amount of words tested, words tested later will most probably teke longer time, since they mostly are longer (at least defaultRandom generated))", action='store_true')
     parser.add_argument("--build", "-b", help="Automatically build the generated tex and dot code (only in combination with a given filename as outBase)", action='store_true')
     parser.add_argument("--verbose", "-v", help="Be more verbose -vv... for even more verbosity (currently up to 2)", action='count', default=0)
+    parser.add_argument("--yes", "-y", help="Answer 'yes' to overwrite questions -> programm is non interactive", action='store_true')
 
     args = parser.parse_args()
 
@@ -76,15 +86,27 @@ if __name__ == "__main__":
     elif args.outBase == "-":
         pass
     else:
+        if not askOverwrite(args.outBase+".tex", args.yes):
+            quit(1)
         f = open(args.outBase+".tex", 'w')
         ele.toTikz(f=f)
         f.close()
+
+        if not askOverwrite(args.outBase+".dot", args.yes):
+            quit(1)
+        dot = ele.toDot(args.outBase+".dot")
+
         if args.build:
             print("Building latex -> pdf")
+            if not askOverwrite(args.outBase+".pdf", args.yes):
+                quit(1)
             p = subprocess.Popen(["pdflatex", args.outBase+".tex"], stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
             p.wait()
-            if ele.toDot(args.outBase+".dot"):
+            if dot:
                 print("Building dot -> pdf")
                 for dotEng in ["dot", "neato", "twopi", "circo", "fdp", "sfdp", "osage"]:
-                    p = subprocess.Popen(["dot", "-o", args.outBase+"."+dotEng+".pdf", "-Tpdf", "-K"+dotEng, args.outBase+".dot"], stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
+                    if not askOverwrite(args.outBase+"."+dotEng+".pdf", args.yes):
+                        quit(1)
+                    p = subprocess.Popen(["dot", "-o", args.outBase+"."+dotEng+".pdf", "-Tpdf", "-K"+dotEng, args.outBase+".dot"],
+                            stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
                     p.wait()
