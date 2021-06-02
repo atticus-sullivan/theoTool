@@ -18,6 +18,9 @@ The ``genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int],int],
 function can be passed through `config.py` too. The function has to return a
 `Iterable[str]` if you use the given parameters doesn't matter.
 
+A single word might be tested more than once (keep that in mind when reading the
+printed stats)
+
 **WARNING:** If using the export to tex/dot be carefull, currently there is no
 check if the files already exist, they are simply overwritten.
 
