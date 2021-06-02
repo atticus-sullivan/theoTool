@@ -45,17 +45,27 @@ class Ele:
 
     def checkAny(self, words:Iterable[str], checkL:Callable[[str],bool], check:bool, l:int, progress:bool):
         bs = []
+        last = True
         for j,word in enumerate(words):
             s = self.simulate(word)
             bs.append(s[0])
             if check:
                 c = checkL(word)
                 if c != s[0]:
-                    print("%-214s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))), end="" if progress else "\n")
+                    if progress:
+                        print(("" if last else "\n") + "%-135s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))), end="" if progress else "\n")
+                        last = False
+                    else:
+                        print("%s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))))
             else:
-                print("-214s" % " ".join(map(lambda x:str(x),(word, *s[:-2]))), end="" if progress else "\n")
+                if progress:
+                    print(("" if last else "\n") + "%-135s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))), end="" if progress else "\n")
+                    last = False
+                else:
+                    print("%s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))))
             if progress and j % 10 == 0:
                 printProgressBar(j+1,l, suffix="Refers to #checked words")
+                last = True
 
         if progress:
             print("")

@@ -36,7 +36,7 @@ class Cfg(Ele):
             forr = self.cfg.get_cnf_parse_tree(l)
             r = (self.ablForest(forr, 0), forr.get_leftmost_derivation())
         self.ts.append((i,r[0],r[1]))
-        return accepted,r[0],r[1]
+        return accepted,[],r[1]
 
     def toTikz(self, f):
         # preamble
