@@ -12,6 +12,10 @@ be generated (this can be a mathematical function, a static dict or what ever
 you want, as long as it takes an int and returns an int)
 This defaults to a linear function with slope `1`
 
+The ``genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int],int], terminals:list[str]) -> Iterable[str]``
+function can be passed through `config.py` too. The function has to return a
+`Iterable[str]` if you use the given parameters doesn't matter.
+
 **WARNING:** If using the export to tex/dot be carefull, currently there is no
 check if the files already exist, they are simply overwritten.
 

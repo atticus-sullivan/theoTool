@@ -1,5 +1,7 @@
 import re
 import math
+from typing import Callable, Iterable
+import random
 
 from pyformlang.cfg import CFG
 # only in effect if --check is set
@@ -25,3 +27,14 @@ def checkL(i:str):
 # maybe you'd like to choose a linear or a quadratic function
 def cntPerLength(l:int) -> int:
     return l
+
+# only in effect, if no checks argument is given in the input yaml
+# genrates the words that are checked. This is provided, since sometimes the
+# default random generator isn't good enough and only wrong words are checked
+def genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int],int], terminals:list[str]) -> Iterable[str]:
+    for l in range(startLen, endLen):
+        for _ in range(cntPerLength(l)):
+            string = ""
+            for _ in range(l):
+                string += random.choice(terminals)
+            yield string

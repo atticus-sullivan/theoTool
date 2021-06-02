@@ -3,6 +3,7 @@ import argparse
 from cfg import Cfg
 from fa import AutomataRegul
 from pda import Pda
+from ele import genRandomWords
 
 import config
 
@@ -29,7 +30,12 @@ if __name__ == "__main__":
         ele = Pda.load(args.inFile)
     else:
         quit(-1)
-    
+
+    if hasattr(config, 'cntPerLength'):
+        cntPerLength = config.cntPerLength
+    else:
+        cntPerLength = lambda l: l
+
     if args.input:
         print("Enter input, terminate with 'EOF', mostly sent by CTRL+D")
         print("Valid terminal symbols: ", ele.terminals)
@@ -37,12 +43,10 @@ if __name__ == "__main__":
         print()
     elif ele.checks != []:
         gen = ele.checks
+    elif hasattr(config, 'genRandomWords'):
+        gen = config.genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength, terminals=ele.terminals)
     else:
-        if hasattr(config, 'cntPerLength'):
-            cntPerLength = config.cntPerLength
-        else:
-            cntPerLength = lambda l: l
-        gen = ele.genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength)
+        gen = genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength, terminals=ele.terminals)
 
     if args.check:
         if hasattr(config, 'checkL'):

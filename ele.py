@@ -1,6 +1,14 @@
 import random
 from typing import Callable, Iterable
 
+def genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int],int], terminals:list[str]) -> Iterable[str]:
+    for l in range(startLen, endLen):
+        for _ in range(cntPerLength(l)):
+            string = ""
+            for _ in range(l):
+                string += random.choice(terminals)
+            yield string
+
 class Ele:
     def __init__(self, terminals:list[str], checks:list[str]):
         self.terminals = terminals
@@ -12,14 +20,6 @@ class Ele:
         raise Exception("super 'toTikz' shouldn't be called")
     def tpDot(self, f):
         raise Exception("super 'toDot' shouldn't be called")
-
-    def genRandomWords(self, startLen:int, endLen:int, cntPerLength:Callable[[int],int]):
-        for l in range(startLen, endLen):
-            for _ in range(cntPerLength(l)):
-                string = ""
-                for _ in range(l):
-                    string += random.choice(self.terminals)
-                yield string
 
     def checkAny(self, words:Iterable[str], checkL:Callable[[str],bool], check:bool):
         bs = []
