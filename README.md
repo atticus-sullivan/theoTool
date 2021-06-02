@@ -2,6 +2,14 @@ language simulator
 =================
 For usage, check the `-h` flag.
 
+Verbosity table
+--------------
+|Num|Effect|
+--- | ---
+| 0 (default) | no additional info shown |
+| 1 | print transitions/productions read by pyformlang |
+| 2 | print output of (pdf) build tools |
+
 Tipp: You may use the `config.py` file to speficy `checkL(i:str)` a function to check if a word
 should be accepted or not (this can be a function using regexes, a static
 dictionary, or whatever you can imagine as long as it takes a string and returns
