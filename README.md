@@ -90,6 +90,7 @@ Please note that by default the Nonterminal `S` will be the Axiom
 pda.yaml
 ---------
 See `example.yaml` for an example
+Please note that the PDA will be accepting on empty stack (see #12)
 
 Required keys:
 - `prods`: should be a list of tuples based on this template
