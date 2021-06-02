@@ -40,7 +40,7 @@ class Ele:
         raise Exception("super 'simulate' shouldn't be called")
     def toTikz(self, f):
         raise Exception("super 'toTikz' shouldn't be called")
-    def tpDot(self, f):
+    def toDot(self, fi:str) -> bool:
         raise Exception("super 'toDot' shouldn't be called")
 
     def checkAny(self, words:Iterable[str], checkL:Callable[[str],bool], check:bool, l:int, progress:bool):

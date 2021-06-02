@@ -40,8 +40,9 @@ class AutomataRegul(Ele):
                         print(r"\path (%s) edge[] node[] {%s} (%s);" % (src,c,dst), file=f)
         print(r"\end{tikzpicture}" + "\n" + r"\end{document}", file=f)
 
-    def toDot(self,f):
-        self.enfa.write_as_dot(f)
+    def toDot(self,fi:str) -> bool:
+        self.enfa.write_as_dot(fi)
+        return True
 
     def toRegex(self):
         return self.enfa.to_regex()
@@ -57,7 +58,7 @@ class AutomataRegul(Ele):
         print("Error: loadJflap not implemented")
 
     @classmethod
-    def loadYaml(cls, path:str):
+    def loadYaml(cls, path:str, verbose:int):
         with open(path) as f:
             d = yaml.safe_load(f.read())
 
@@ -68,6 +69,8 @@ class AutomataRegul(Ele):
         if 'delta' not in d or not isinstance(d['delta'], list):
             raise KeyError("delta key not defined in input or not a list")
         else:
+            if verbose >= 1:
+                print("delta transitions")
             for d1 in d['delta']:
                 t = make_tuple(d1)
                 if t[0] not in stateD:
@@ -82,6 +85,10 @@ class AutomataRegul(Ele):
 
                 x = (stateD[t[0]], symbolD[t[1]], stateD[t[2]])
                 enfa.add_transition(*x)
+                if verbose >= 1:
+                    print(*x)
+            if verbose >= 1:
+                print()
 
         if 'accepting' not in d or not isinstance(d['accepting'], list):
             raise KeyError("accepting key not defined in input")

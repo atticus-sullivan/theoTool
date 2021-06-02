@@ -58,11 +58,12 @@ class Pda(Ele):
                 print(r"\path (%s) edge[] node[] {%s} (%s);" % (src,str(char)+","+str(stackBefore)+"/"+str(stackAfter),dst), file=f)
         print(r"\end{tikzpicture}" + "\n" + r"\end{document}", file=f)
 
-    def toDot(self, f):
+    def toDot(self, fi:str) -> bool:
         print("pda does no toDot()")
+        return False
 
     @classmethod
-    def load(cls, fi:str):
+    def load(cls, fi:str, verbose:int):
         with open(fi, 'r') as f:
             d = yaml.safe_load(f.read())
 
@@ -74,6 +75,8 @@ class Pda(Ele):
         if 'delta' not in d or not isinstance(d['delta'], list):
             raise KeyError("delta key not defined in input (or not a list)")
         else:
+            if verbose >= 1:
+                print("Delta transitions")
             for d1 in d['delta']:
                 t = make_tuple(d1)
                 if t[0] not in stateD:
@@ -96,7 +99,10 @@ class Pda(Ele):
                 stackSymbs = list(map(lambda x: sSymbolD[x], filter(lambda x: x != '', t[4:])))
                 x = (stateD[t[0]], symbolD[t[1]], sSymbolD[t[2]], stateD[t[3]], stackSymbs)
                 pda.add_transition(*x)
-                print(x)
+                if verbose >= 1:
+                    print(*x)
+            if verbose >= 1:
+                print()
 
         if 'startStack' not in d:
             raise KeyError("startStack key not defined in input")

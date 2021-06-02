@@ -10,7 +10,7 @@ class Cfg(Ele):
         self.ts = []
 
     @classmethod
-    def load(cls, fi:str):
+    def load(cls, fi:str, verbose:int):
         with open(fi, 'r') as f:
             i = yaml.safe_load(f.read())
             if 'prods' not in i or not isinstance(i['prods'], list):
@@ -24,6 +24,9 @@ class Cfg(Ele):
                 checks = list(map(lambda x: str(x), i['checks']))
             else:
                 checks = []
+            if verbose >= 1:
+                print("Productions:")
+                print(cfg.to_text(), end="\n\n")
 
         return Cfg(cfg, checks=checks)
 
@@ -76,5 +79,6 @@ class Cfg(Ele):
             acc.append("    "*lvl + "]")
         return acc
 
-    def toDot(self, f):
+    def toDot(self, fi:str) -> bool:
         print("cfg does no toDot()")
+        return False

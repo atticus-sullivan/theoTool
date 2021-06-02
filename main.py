@@ -4,6 +4,7 @@ from cfg import Cfg
 from fa import AutomataRegul
 from pda import Pda
 from ele import genRandomWords
+import subprocess
 
 import config
 
@@ -19,16 +20,18 @@ if __name__ == "__main__":
     parser.add_argument("--type", "-t", help="Set type of input", choices=['fa', 'dfa', 'nfa', 'cfg', 'pda'], default='fa')
     parser.add_argument("--input", "-i", help="Use stdin as input for checks (input is requested at the beginning, is simulated as batch afterwards)", action='store_true')
     parser.add_argument("--progress", help="Show progrssbar while simulating (only shows progess in terms of amount of words tested, words tested later will most probably teke longer time, since they mostly are longer (at least defaultRandom generated))", action='store_true')
+    parser.add_argument("--build", "-b", help="Automatically build the generated tex and dot code (only in combination with a given filename as outBase)", action='store_true')
+    parser.add_argument("--verbose", "-v", help="Be more verbose -vv... for even more verbosity (currently up to 2)", action='count', default=0)
 
     args = parser.parse_args()
 
     if args.type in ['fa', 'dfa', 'nfa']:
-        ele = AutomataRegul.loadYaml(args.inFile)
+        ele = AutomataRegul.loadYaml(args.inFile, args.verbose)
         print("regex:", ele.toRegex())
     elif args.type in ['cfg']:
-        ele = Cfg.load(args.inFile)
+        ele = Cfg.load(args.inFile, args.verbose)
     elif args.type in ['pda']:
-        ele = Pda.load(args.inFile)
+        ele = Pda.load(args.inFile, args.verbose)
     else:
         quit(-1)
 
@@ -66,12 +69,21 @@ if __name__ == "__main__":
         checkL = lambda _: True # function is not relevant if check is not set
     ele.checkAny(gen,checkL=checkL, check=args.check, l=l, progress=args.progress)
 
-    if args.outBase == "-":
-        quit(0)
-    elif args.outBase == "+":
+    if args.outBase == "+":
         f = sys.stderr
+        ele.toTikz(f=f)
+    elif args.outBase == "-":
+        pass
     else:
-        ele.toDot(args.outBase+".dot")
-        f = open(args.outBase+".tex", "w")
-    ele.toTikz(f=f)
-    f.close()
+        f = open(args.outBase+".tex", 'w')
+        ele.toTikz(f=f)
+        f.close()
+        if args.build:
+            print("Building latex -> pdf")
+            p = subprocess.Popen(["pdflatex", args.outBase+".tex"], stdout=(None if args.verbose >= 2 else open("/dev/null", "w")))
+            p.wait()
+            if ele.toDot(args.outBase+".dot"):
+                print("Building dot -> pdf")
+                for dotEng in ["dot", "neato", "twopi", "circo", "fdp", "sfdp", "osage"]:
+                    p = subprocess.Popen(["dot", "-o", args.outBase+"."+dotEng+".pdf", "-Tpdf", "-K"+dotEng, args.outBase+".dot"], stdout=(None if args.verbose >= 2 else open("/dev/null", "w")))
+                    p.wait()
