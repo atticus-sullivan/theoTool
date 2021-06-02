@@ -59,10 +59,10 @@ class Ele:
                         print("%s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))))
             else:
                 if progress:
-                    print(("" if last else "\n") + "%-135s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))), end="" if progress else "\n")
+                    print(("" if last else "\n") + "%-135s" % " ".join(map(lambda x:str(x),(word, *s))), end="" if progress else "\n")
                     last = False
                 else:
-                    print("%s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))))
+                    print("%s" % " ".join(map(lambda x:str(x),(word, *s))))
             if progress and j % 10 == 0:
                 printProgressBar(j+1,l, suffix="Refers to #checked words")
                 last = True
