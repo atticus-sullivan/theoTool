@@ -93,9 +93,10 @@ class Pda(Ele):
                     if stackSymb not in sSymbolD:
                         sSymbolD[t[4]] = StackSymbol(stackSymb) #TODO order
 
-                stackSymbs = list(map(lambda x: sSymbolD[x], t[4:]))
+                stackSymbs = list(map(lambda x: sSymbolD[x], filter(lambda x: x != '', t[4:])))
                 x = (stateD[t[0]], symbolD[t[1]], sSymbolD[t[2]], stateD[t[3]], stackSymbs)
                 pda.add_transition(*x)
+                print(x)
 
         if 'startStack' not in d:
             raise KeyError("startStack key not defined in input")
