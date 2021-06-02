@@ -3,7 +3,7 @@ For usage, check the `-h` flag.
 Tipp: You may use the `config.py` file to speficy `checkL(i:str)` a function to check if a word
 should be accepted or not (this can be a function using regexes, a static
 dictionary, or whatever you can imagine as long as it takes a string and returns
-a boolean).
+a boolean (Tipp: a CFG is possible in here too, see comments in `config.py`)).
 
 When checking random words there are some parameters like startLength and
 endLength (words with lengths between these two numbers are generated). With the
