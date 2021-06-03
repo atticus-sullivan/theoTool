@@ -1,4 +1,8 @@
 import sys
+
+if (3,9) > sys.version_info:
+    raise Exception("Python version above or equal 3.9 needed. Please contact via gitea if uprading is no option")
+
 import argparse
 from cfg import Cfg
 from fa import AutomataRegul
