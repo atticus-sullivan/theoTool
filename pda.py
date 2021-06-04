@@ -24,7 +24,7 @@ class Pda(Ele):
         r = ([],[])
         return accepted,r[0],r[1]
 
-    def toTikz(self,f):
+    def toTikz(self,f) -> bool:
         # preamble
         print(r"\documentclass{standalone}", file=f)
         print(r"\usepackage{tikz}", file=f)
@@ -57,6 +57,7 @@ class Pda(Ele):
             else:
                 print(r"\path (%s) edge[] node[] {%s} (%s);" % (src,str(char)+","+str(stackBefore)+"/"+str(stackAfter),dst), file=f)
         print(r"\end{tikzpicture}" + "\n" + r"\end{document}", file=f)
+        return True
 
     def toDot(self, fi:str) -> bool:
         print("pda does no toDot()")

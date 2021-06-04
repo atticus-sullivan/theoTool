@@ -38,7 +38,7 @@ class Ele:
     
     def simulate(self, i:str) -> tuple[bool,list,list]:
         raise Exception("super 'simulate' shouldn't be called")
-    def toTikz(self, f):
+    def toTikz(self, f) -> bool:
         raise Exception("super 'toTikz' shouldn't be called")
     def toDot(self, fi:str) -> bool:
         raise Exception("super 'toDot' shouldn't be called")

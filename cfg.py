@@ -41,7 +41,7 @@ class Cfg(Ele):
         self.ts.append((i,r[0],r[1]))
         return accepted,[],r[1]
 
-    def toTikz(self, f):
+    def toTikz(self, f) -> bool:
         # preamble
         print(r"\documentclass[varwidth=true,multi=page, border=1cm]{standalone}", file=f)
         print(r"\usepackage{forest}", file=f)
@@ -69,6 +69,7 @@ class Cfg(Ele):
                 print(str(d).replace("#", "-") + r"\\[0cm]", file=f)
             print(r"\end{page}", file=f)
         print(r"\end{document}", file=f)
+        return true
 
     def ablForest(self,tree:ParseTree, lvl:int):
         acc = []

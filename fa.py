@@ -12,7 +12,7 @@ class AutomataRegul(Ele):
         self.enfa   = aut
         self.states = aut.states
 
-    def toTikz(self,f):
+    def toTikz(self,f) -> bool:
         # preamble
         print(r"\documentclass{standalone}", file=f)
         print(r"\usepackage{tikz}", file=f)
@@ -39,6 +39,7 @@ class AutomataRegul(Ele):
                     else:
                         print(r"\path (%s) edge[] node[] {%s} (%s);" % (src,c,dst), file=f)
         print(r"\end{tikzpicture}" + "\n" + r"\end{document}", file=f)
+        return True
 
     def toDot(self,fi:str) -> bool:
         self.enfa.write_as_dot(fi)

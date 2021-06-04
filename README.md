@@ -65,6 +65,17 @@ required to run this programm. Install via `pip install -r requirements.txt`
 Input files
 ===========
 
+re.yaml
+--------
+See `exampleRE.yaml` for an example
+
+Required keys:
+- `regex`: regular expression as string. Operators like `[``]` are not
+  interpreted, you'll have to resolve them.
+
+Optional keys:
+- `check`: should be list[str] with a list of strings that are to be checked
+
 automata.yaml
 -----------
 See `exampleFA.yaml` for an example

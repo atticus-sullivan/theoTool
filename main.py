@@ -7,6 +7,7 @@ import argparse
 from cfg import Cfg
 from fa import AutomataRegul
 from pda import Pda
+from regex import RegularExpression
 from ele import genRandomWords
 import subprocess
 import os
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     parser.add_argument("--startLen", "-s", help="Minimum length of the words to check [DEFAULT: %(default)s]", nargs='?', type=int, default=1)
     parser.add_argument("--endLen", "-e", help="Maximum length of the words to check [DEFAULT: %(default)s]", nargs='?', type=int, default=5)
     parser.add_argument("--check", "-c", help="Check input words via the 'checkL' function", action='store_true')
-    parser.add_argument("--type", "-t", help="Set type of input", choices=['fa', 'dfa', 'nfa', 'cfg', 'pda'], default='fa')
+    parser.add_argument("--type", "-t", help="Set type of input", choices=['re', 'fa', 'dfa', 'nfa', 'cfg', 'pda'], default='fa')
     parser.add_argument("--input", "-i", help="Use stdin as input for checks (input is requested at the beginning, is simulated as batch afterwards)", action='store_true')
     parser.add_argument("--progress", help="Show progrssbar while simulating (only shows progess in terms of amount of words tested, words tested later will most probably teke longer time, since they mostly are longer (at least defaultRandom generated))", action='store_true')
     parser.add_argument("--build", "-b", help="Automatically build the generated tex and dot code (only in combination with a given filename as outBase)", action='store_true')
@@ -48,6 +49,8 @@ if __name__ == "__main__":
         ele = Cfg.load(args.inFile, args.verbose)
     elif args.type in ['pda']:
         ele = Pda.load(args.inFile, args.verbose)
+    elif args.type in ['re']:
+        ele = RegularExpression.loadYaml(args.inFile, args.verbose)
     else:
         quit(-1)
 
@@ -94,7 +97,7 @@ if __name__ == "__main__":
         if not askOverwrite(args.outBase+".tex", args.yes):
             quit(1)
         f = open(args.outBase+".tex", 'w')
-        ele.toTikz(f=f)
+        tex = ele.toTikz(f=f)
         f.close()
 
         if not askOverwrite(args.outBase+".dot", args.yes):
@@ -102,11 +105,12 @@ if __name__ == "__main__":
         dot = ele.toDot(args.outBase+".dot")
 
         if args.build:
-            print("Building latex -> pdf")
-            if not askOverwrite(args.outBase+".pdf", args.yes):
-                quit(1)
-            p = subprocess.Popen(["pdflatex", args.outBase+".tex"], stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
-            p.wait()
+            if tex:
+                print("Building latex -> pdf")
+                if not askOverwrite(args.outBase+".pdf", args.yes):
+                    quit(1)
+                p = subprocess.Popen(["pdflatex", args.outBase+".tex"], stdout=(None if args.verbose >= 2 else open(os.devnull, "w")))
+                p.wait()
             if dot:
                 print("Building dot -> pdf")
                 for dotEng in ["dot", "neato", "twopi", "circo", "fdp", "sfdp", "osage"]:
