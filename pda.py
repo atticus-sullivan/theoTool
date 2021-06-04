@@ -68,7 +68,7 @@ class Pda(Ele):
         return False
 
     @classmethod
-    def load(cls, fi:str, verbose:int):
+    def loadYaml(cls, fi:str, verbose:int):
         with open(fi, 'r') as f:
             d = yaml.safe_load(f.read())
 

@@ -46,9 +46,9 @@ if __name__ == "__main__":
         ele = AutomataRegul.loadYaml(args.inFile, args.verbose)
         print("regex:", ele.toRegex())
     elif args.type in ['cfg']:
-        ele = Cfg.load(args.inFile, args.verbose)
+        ele = Cfg.loadYaml(args.inFile, args.verbose)
     elif args.type in ['pda']:
-        ele = Pda.load(args.inFile, args.verbose)
+        ele = Pda.loadYaml(args.inFile, args.verbose)
     elif args.type in ['re']:
         ele = RegularExpression.loadYaml(args.inFile, args.verbose)
     else:

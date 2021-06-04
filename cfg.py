@@ -10,7 +10,7 @@ class Cfg(Ele):
         self.ts = []
 
     @classmethod
-    def load(cls, fi:str, verbose:int):
+    def loadYaml(cls, fi:str, verbose:int):
         with open(fi, 'r') as f:
             i = yaml.safe_load(f.read())
             if 'prods' not in i or not isinstance(i['prods'], list):
