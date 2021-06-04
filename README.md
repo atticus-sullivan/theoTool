@@ -2,6 +2,12 @@ language simulator
 =================
 For usage, check the `-h` flag.
 
+Note that symbols are most of the time separated by spaces and that the alphabet
+of a language cannot contain `space`,`.`,`|`,`+`,`*`,`(`,`)`,`epsilon` and `$`
+(those are interpreted by `pformlang`). Therfore `python` is interpreted as
+single symbol whereas `p y t h o n` is interpreted as the word python
+concatenated of the single characters/symbols.
+
 #### Verbosity table
 |Num|Effect|
 --- | ---
