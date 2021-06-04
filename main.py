@@ -37,6 +37,7 @@ if __name__ == "__main__":
     parser.add_argument("--build", "-b", help="Automatically build the generated tex and dot code (only in combination with a given filename as outBase)", action='store_true')
     parser.add_argument("--verbose", "-v", help="Be more verbose -vv... for even more verbosity (currently up to 2)", action='count', default=0)
     parser.add_argument("--yes", "-y", help="Answer 'yes' to overwrite questions -> programm is non interactive", action='store_true')
+    parser.add_argument("--unique", "-u", help="Test words only once to get a more expressive stat. Note that NO additional Words are beeing generated (might cause a deadlock) if there are duplicates. The sample size is just smaller.", action='store_true')
 
     args = parser.parse_args()
 
@@ -82,7 +83,7 @@ if __name__ == "__main__":
             raise Exception("checkL not implemented")
     else:
         checkL = lambda _: True # function is not relevant if check is not set
-    ele.checkAny(gen,checkL=checkL, check=args.check, l=l, progress=args.progress)
+    ele.checkAny(gen,checkL=checkL, check=args.check, l=l, progress=args.progress, unique=args.unique)
 
     if args.outBase == "+":
         f = sys.stderr

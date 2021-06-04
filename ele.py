@@ -43,10 +43,15 @@ class Ele:
     def toDot(self, fi:str) -> bool:
         raise Exception("super 'toDot' shouldn't be called")
 
-    def checkAny(self, words:Iterable[str], checkL:Callable[[str],bool], check:bool, l:int, progress:bool):
+    def checkAny(self, words:Iterable[str], checkL:Callable[[str],bool], check:bool, l:int, progress:bool, unique:bool):
         bs = []
         last = True
+        uniqueWords = set()
         for j,word in enumerate(words):
+            if unique:
+                if word in uniqueWords:
+                    continue
+                uniqueWords.add(word)
             s = self.simulate(word)
             bs.append(s[0])
             if check:
