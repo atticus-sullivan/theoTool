@@ -9,17 +9,21 @@ def make_tuple(i:str):
 
 class Pda(Ele):
     
-    def __init__(self, aut:PDA, checks:list[str]):
+    def __init__(self, aut:PDA, checks:list[str], acc:bool):
         super().__init__(terminals=list(map(lambda x: x.value, aut.input_symbols)), checks=checks)
         self.pda = aut
         self.states = aut.states
         self.cfg = None
+        self.accepting = acc
         
     # returns (accepted,texTree,leftDeriv)
     # returns (accepted,[],[])
     def simulate(self, i:str):
         if self.cfg is None:
-            self.cfg = Cfg(cfg=self.pda.to_cfg(),checks=self.checks)
+            if self.accepting:
+                self.cfg = Cfg(cfg=self.pda.to_empty_stack().to_cfg(),checks=self.checks)
+            else:
+                self.cfg = Cfg(cfg=self.pda.to_cfg(),checks=self.checks)
         accepted = self.cfg.simulate(i)[0]
         r = ([],[])
         return accepted,r[0],r[1]
@@ -113,10 +117,17 @@ class Pda(Ele):
             raise KeyError("initial key not defined in input")
         pda.set_start_state(d['initial'])
 
+        accepting = False
+        if 'accepting' in d:
+            print("Note that acceptance on final state is not tested, yet")
+            for a in d['accepting']:
+                pda.add_final_state(str(a))
+            accepting = True
+
         if 'check' in d and isinstance(d['check'], list):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return Pda(aut=pda, checks=d['checks'])
+            return Pda(aut=pda, checks=d['checks'], acc=acctepting)
 
-        return Pda(aut=pda, checks=[])
+        return Pda(aut=pda, checks=[], acc=accepting)
