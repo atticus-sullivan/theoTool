@@ -23,9 +23,9 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
     if iteration == total: 
         print()
 
-def genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int],int], terminals:list[str]) -> Iterable[str]:
+def genRandomWords(startLen:int, endLen:int, cntPerLength:Callable[[int,int],int], terminals:list[str]) -> Iterable[str]:
     for l in range(startLen, endLen):
-        for _ in range(cntPerLength(l)):
+        for _ in range(cntPerLength(l, len(terminals))):
             string = ""
             for _ in range(l):
                 string += random.choice(terminals)

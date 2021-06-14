@@ -57,7 +57,7 @@ if __name__ == "__main__":
     if hasattr(config, 'cntPerLength'):
         cntPerLength = config.cntPerLength
     else:
-        cntPerLength = lambda l: l+1
+        cntPerLength = lambda l, w: l+1
 
     if args.input:
         print("Enter input, terminate with 'EOF', mostly sent by CTRL+D")
@@ -72,12 +72,12 @@ if __name__ == "__main__":
         gen = config.genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength, terminals=ele.terminals)
         l = 0
         for x in range(args.startLen,args.endLen):
-            l += cntPerLength(x)
+            l += cntPerLength(x, len(ele.terminals))
     else:
         gen = genRandomWords(startLen=args.startLen, endLen=args.endLen, cntPerLength=cntPerLength, terminals=ele.terminals)
         l = 0
         for x in range(args.startLen,args.endLen):
-            l += cntPerLength(x)
+            l += cntPerLength(x, len(ele.terminals))
 
     if args.check:
         if hasattr(config, 'checkL'):
