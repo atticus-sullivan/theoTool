@@ -98,7 +98,7 @@ class AutomataRegul(Ele):
             for a in d['accepting']:
                 enfa.add_final_state(str(a))
 
-        if 'initial' not in d or not isinstance(d['initial'], int):
+        if 'initial' not in d:
             raise KeyError("initial key not defined in input")
         else:
             enfa.add_start_state(str(d['initial']))
