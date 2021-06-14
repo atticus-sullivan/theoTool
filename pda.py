@@ -5,17 +5,18 @@ from cfg import Cfg
 
 def make_tuple(i:str):
     s = i.split(",")
-    return tuple(s)
+    t = tuple(map(str, s))
+    return t
 
 class Pda(Ele):
-    
+
     def __init__(self, aut:PDA, checks:list[str], acc:bool):
         super().__init__(terminals=list(map(lambda x: x.value, aut.input_symbols)), checks=checks)
         self.pda = aut
         self.states = aut.states
         self.cfg = None
         self.accepting = acc
-        
+
     # returns (accepted,texTree,leftDeriv)
     # returns (accepted,[],[])
     def simulate(self, i:str):
@@ -113,11 +114,11 @@ class Pda(Ele):
 
         if 'startStack' not in d:
             raise KeyError("startStack key not defined in input")
-        pda.set_start_stack_symbol(d['startStack'])
+        pda.set_start_stack_symbol(str(d['startStack']))
 
         if 'initial' not in d:
             raise KeyError("initial key not defined in input")
-        pda.set_start_state(d['initial'])
+        pda.set_start_state(str(d['initial']))
 
         accepting = False
         if 'accepting' in d:

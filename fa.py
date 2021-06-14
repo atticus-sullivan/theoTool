@@ -4,7 +4,8 @@ from pyformlang.finite_automaton import EpsilonNFA, State, Symbol, Epsilon
 
 def make_tuple(i:str):
     s = i.split(",")
-    return tuple(s[0:3])
+    t = tuple(map(str, s))
+    return t[0:3]
 
 class AutomataRegul(Ele):
     def __init__(self, checks:list[str], aut:EpsilonNFA):
