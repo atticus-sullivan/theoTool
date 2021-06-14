@@ -21,8 +21,10 @@ class Pda(Ele):
     def simulate(self, i:str):
         if self.cfg is None:
             if self.accepting:
+                print("final -> empt Stack -> cfg")
                 self.cfg = Cfg(cfg=self.pda.to_empty_stack().to_cfg(),checks=self.checks)
             else:
+                print("empt Stack -> cfg")
                 self.cfg = Cfg(cfg=self.pda.to_cfg(),checks=self.checks)
         accepted = self.cfg.simulate(i)[0]
         r = ([],[])
@@ -128,6 +130,6 @@ class Pda(Ele):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return Pda(aut=pda, checks=d['checks'], acc=acctepting)
+            return Pda(aut=pda, checks=d['checks'], acc=accepting)
 
         return Pda(aut=pda, checks=[], acc=accepting)
