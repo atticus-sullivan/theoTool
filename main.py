@@ -8,6 +8,7 @@ from cfg import Cfg
 from fa import AutomataRegul
 from pda import Pda
 from regex import RegularExpression
+from tm import Ndtm
 from ele import genRandomWords
 import subprocess
 import os
@@ -32,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument("--startLen", "-s", help="Minimum length of the words to check [DEFAULT: %(default)s]", nargs='?', type=int, default=1)
     parser.add_argument("--endLen", "-e", help="Maximum length of the words to check [DEFAULT: %(default)s]", nargs='?', type=int, default=5)
     parser.add_argument("--check", "-c", help="Check input words via the 'checkL' function", action='store_true')
-    parser.add_argument("--type", "-t", help="Set type of input", choices=['re', 'fa', 'dfa', 'nfa', 'cfg', 'pda'], default='fa')
+    parser.add_argument("--type", "-t", help="Set type of input", choices=['re', 'fa', 'dfa', 'nfa', 'cfg', 'pda', 'tm'], default='fa')
     parser.add_argument("--input", "-i", help="Use stdin as input for checks (input is requested at the beginning, is simulated as batch afterwards)", action='store_true')
     parser.add_argument("--progress", help="Show progrssbar while simulating (only shows progess in terms of amount of words tested, words tested later will most probably teke longer time, since they mostly are longer (at least defaultRandom generated))", action='store_true')
     parser.add_argument("--build", "-b", help="Automatically build the generated tex and dot code (only in combination with a given filename as outBase)", action='store_true')
@@ -51,6 +52,8 @@ if __name__ == "__main__":
         ele = Pda.loadYaml(args.inFile, args.verbose)
     elif args.type in ['re']:
         ele = RegularExpression.loadYaml(args.inFile, args.verbose)
+    elif args.type in ['tm']:
+        ele = Ndtm.loadYaml(args.inFile, args.verbose)
     else:
         quit(-1)
 

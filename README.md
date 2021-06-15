@@ -121,9 +121,29 @@ Regarding the `tex` template which may be printed on execution: Each loop has a
 key `ownLoop=90` this creates a loop which is centered at `90` degrees. Enter
 another Number to rotate the loop.
 
+tm.yaml
+-------
+See `exampleTM.yaml` for an example
+
+Required keys:
+- `delta`: should be a list of srcState,char,read,write,dstState,movement[R,L,S]
+- `initial`: should be a state
+- `accepting`: should a state (only one)
+- `space`: should be a string representing an empty cell on band
+
+Optional keys:
+- `check`: should be list[str] with a list of strings that are to be checked
+
+Movement: R -> **R**ight; L -> **L**eft; S -> **S**tay
+
+Note that the simulator uses one band by default. If you'd like to use more than
+one bands, check out the original simulator and/or reach out to me so that this
+feature is being implemented to this tool as well.
+
 Credits
 -------
 Credits to [pyformlang](https://github.com/Aunsiels/pyformlang)
+Also to [https://github.com/dgilros/TuringNDTMSimulator](https://github.com/dgilros/TuringNDTMSimulator) for the ndtmSimulation "library"
 
 
 If any bugs or questions occure, simply write an issue with the corresponding

@@ -1,0 +1,18 @@
+# checks if input is power of two
+delta:
+    - q0,0,#,q0,R
+    - q0,1,#,q1,R
+
+    - q1,0,#,q1,R
+    - q1,1,#,q2,R
+
+    - q2,0,#,q2,R
+    - q2,1,#,q2,R
+
+    - q1,#,1,q3,S
+    - q2,#,0,q3,S
+
+initial: q0
+accepting: q3
+
+space: '#'
