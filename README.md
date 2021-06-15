@@ -107,7 +107,7 @@ Please note that by default the Nonterminal `S` will be the Axiom
 
 pda.yaml
 ---------
-See `example.yaml` for an example
+See `example{Pda,PdaFinal}.yaml` for an example
 
 Required keys:
 - `prods`: should be a list of tuples based on this template
@@ -128,7 +128,7 @@ another Number to rotate the loop.
 
 tm.yaml
 -------
-See `exampleTM.yaml` for an example
+See `exampleTM.yaml` for an example. Attention: This is not extensively tested.
 
 Required keys:
 - `delta`: should be a list of srcState,char,read,write,dstState,movement[R,L,S]
