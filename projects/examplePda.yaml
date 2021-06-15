@@ -6,3 +6,7 @@ delta:
 
 initial: q
 startStack: Z0
+
+check:
+    - aa
+    - aaa

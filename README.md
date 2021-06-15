@@ -108,7 +108,6 @@ Please note that by default the Nonterminal `S` will be the Axiom
 pda.yaml
 ---------
 See `example.yaml` for an example
-Please note that the PDA will be accepting on empty stack (see #12)
 
 Required keys:
 - `prods`: should be a list of tuples based on this template
@@ -116,6 +115,12 @@ Required keys:
   as needed can follow.
 - `initial`: the initial state
 - `startStack`: stackSymb which is on the Stack from the beginning
+
+Optional keys:
+- `check`: should be list[str] with a list of strings that are to be checked
+  (here no spaces are needed in between the symbols)
+- `accepting`: list of states that should be accepting. If key is omitted, the
+  pad will accept on empty stack (default)
 
 Regarding the `tex` template which may be printed on execution: Each loop has a
 key `ownLoop=90` this creates a loop which is centered at `90` degrees. Enter

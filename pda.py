@@ -131,6 +131,6 @@ class Pda(Ele):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return Pda(aut=pda, checks=d['checks'], acc=accepting)
+            return Pda(aut=pda, checks=d['check'], acc=accepting)
 
         return Pda(aut=pda, checks=[], acc=accepting)
