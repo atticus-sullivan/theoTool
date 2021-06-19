@@ -112,6 +112,6 @@ class Ndtm(Ele):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return Ndtm(aut=ndtm, checks=d['checks'], terminals=list(terminals), states=list(states))
+            return Ndtm(aut=ndtm, checks=d['check'], terminals=list(terminals), states=list(states))
 
         return Ndtm(aut=ndtm, checks=[], terminals=list(terminals), states=list(states))

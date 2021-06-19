@@ -107,6 +107,6 @@ class AutomataRegul(Ele):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return AutomataRegul(aut=enfa, checks=d['checks'])
+            return AutomataRegul(aut=enfa, checks=d['check'])
 
         return AutomataRegul(aut=enfa, checks=[])

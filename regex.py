@@ -25,7 +25,7 @@ class RegularExpression(Ele):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return RegularExpression(re=re, checks=d['checks'])
+            return RegularExpression(re=re, checks=d['check'])
         return RegularExpression(re=re, checks=[])
 
     def toTikz(self,f) -> bool:
