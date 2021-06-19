@@ -15,13 +15,14 @@ class Tape:
       
     # Loads a new string and sets the tape head     
     def loadString(self, string, head): 
-        self.symbols = list(string) 
+        self.symbols = list(string)
         self.head = head 
           
     # Returns the symbol on the current cell, or the blank 
     # if the head is on the start of the infinite blanks 
     def readSymbol(self): 
-        if self.head < len(self.symbols): 
+        # print(self.head, self.symbols[self.head] if 0 <= self.head < len(self.symbols) else "blank")
+        if 0 <= self.head < len(self.symbols): 
             return self.symbols[self.head] 
         else: 
             return self.blank 
@@ -29,10 +30,13 @@ class Tape:
     # Writes a symbol in the current cell, extending 
     # the list if necessary 
     def writeSymbol(self, symbol): 
-        if self.head < len(self.symbols): 
+        if 0 <= self.head < len(self.symbols): 
             self.symbols[self.head] = symbol 
+        elif self.head < 0:
+            self.symbols = [symbol] + self.symbols
+            self.head += 1
         else: 
-            self.symbols.append(symbol) 
+            self.symbols.append(symbol)
               
     # Moves the head left (-1), stay (0) or right (1) 
     def moveHead(self, direction): 
@@ -108,6 +112,7 @@ class NDTM:
         while len(queue) > 0: 
             tm = queue.popleft() 
             transitions = tm.getTrans() 
+            # print("state:",self.state, "symb:", self.tapes[0].readSymbol(), "\t".join(list(map(str,self.tapes))), transitions)
             if transitions is None: 
                 # there are not transactions. Exit 
                 # if the TM is in the final state 
