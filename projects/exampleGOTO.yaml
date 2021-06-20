@@ -1,0 +1,23 @@
+procedure:
+    Geata: if x1 = 0 goto Rom
+    M2: y := x1
+    M3: z := 1
+    M4: k = y mod 2
+    Labici: if k = 1 goto Ardea
+    M5: y = y div 2
+    M6: z = z * 2
+    M7: k = y mod 2
+    M8: goto Labici
+    Ardea: x1 = x1 - z
+    M9: x1 = x1 * 2
+    M10: x0 = x0 + 1
+    M11: goto Geata
+    Rom: halt
+
+startLbl: Geata
+inputVar: x1
+retVar: x0
+
+insert:
+    - "0"
+    - "1"
