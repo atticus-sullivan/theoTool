@@ -19,8 +19,33 @@ cfg = CFG.from_text("S -> a b")
 def cfgContain(i:str):
     return cfg.contains(i)
 
-def checkL(i:str):
-    return abEx(i)
+
+# s : (accepted:bool,[],[])
+def checkL_fa  (i:str, s:tuple) -> bool:
+    return True
+
+# s : (True,texTree,linkableitung) or
+# s : (False,[],[])
+def checkL_pda (i:str, s:tuple) -> bool:
+    return True
+
+# s : (True,texTree,linkableitung) or
+# s : (False,[],[])
+def checkL_cfg (i:str, s:tuple) -> bool:
+    return True
+
+# s : (accepted:bool,return of TM lib,[])
+# return of TM lib: is a TM (use .tapes to get the tapes and .state to get the final state)
+def checkL_tm  (i:str, s:tuple) -> bool:
+    return True
+
+# s: (value of the return variable, dict with all variables)
+def checkL_goto(i:str, s:tuple) -> bool:
+    return True
+
+# s: (accepted:bool,[],[])
+def checkL_re  (i:str, s:tuple) -> bool:
+    return True
 
 # only in effect if input is generated randomly
 # determines how many words should be tested for a given length

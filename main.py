@@ -46,14 +46,49 @@ if __name__ == "__main__":
     if args.type in ['fa', 'dfa', 'nfa']:
         ele = AutomataRegul.loadYaml(args.inFile, args.verbose)
         print("regex:", ele.toRegex())
+        if args.check:
+            if hasattr(config, 'checkL_fa'):
+                checkL = config.checkL_fa
+            else:
+                raise Exception("checkL_fa not implemented")
+        else:
+            checkL = lambda _,_: True # function is not relevant if check is not set
     elif args.type in ['cfg']:
         ele = Cfg.loadYaml(args.inFile, args.verbose)
+        if args.check:
+            if hasattr(config, 'checkL_cfg'):
+                checkL = config.checkL_cfg
+            else:
+                raise Exception("checkL_cfg not implemented")
+        else:
+            checkL = lambda _,_: True # function is not relevant if check is not set
     elif args.type in ['pda']:
         ele = Pda.loadYaml(args.inFile, args.verbose)
+        if args.check:
+            if hasattr(config, 'checkL_pda'):
+                checkL = config.checkL_pda
+            else:
+                raise Exception("checkL_pda not implemented")
+        else:
+            checkL = lambda _,_: True # function is not relevant if check is not set
     elif args.type in ['re']:
         ele = RegularExpression.loadYaml(args.inFile, args.verbose)
+        if args.check:
+            if hasattr(config, 'checkL_re'):
+                checkL = config.checkL_re
+            else:
+                raise Exception("checkL_re not implemented")
+        else:
+            checkL = lambda _,_: True # function is not relevant if check is not set
     elif args.type in ['tm']:
         ele = Ndtm.loadYaml(args.inFile, args.verbose)
+        if args.check:
+            if hasattr(config, 'checkL_tm'):
+                checkL = config.checkL_tm
+            else:
+                raise Exception("checkL not implemented")
+        else:
+            checkL = lambda _,_: True # function is not relevant if check is not set
     else:
         quit(-1)
 
@@ -82,13 +117,6 @@ if __name__ == "__main__":
         for x in range(args.startLen,args.endLen):
             l += cntPerLength(x, len(ele.terminals))
 
-    if args.check:
-        if hasattr(config, 'checkL'):
-            checkL = config.checkL
-        else:
-            raise Exception("checkL not implemented")
-    else:
-        checkL = lambda _: True # function is not relevant if check is not set
     ele.checkAny(gen,checkL=checkL, check=args.check, l=l, progress=args.progress, unique=args.unique)
 
     if args.outBase == "+":

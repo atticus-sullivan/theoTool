@@ -48,7 +48,7 @@ class Ndtm(Ele):
         print("Ndtm does no toDot")
         return False
 
-    # returns (accepted,[],[])
+    # returns (accepted,return of TM lib,[])
     def simulate(self, i:str):
         ret = self.ndtm.accepts(i)
         return (False if ret is None else True, ret, [])

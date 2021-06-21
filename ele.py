@@ -43,7 +43,7 @@ class Ele:
     def toDot(self, fi:str) -> bool:
         raise Exception("super 'toDot' shouldn't be called")
 
-    def checkAny(self, words:Iterable[str], checkL:Callable[[str],bool], check:bool, l:int, progress:bool, unique:bool):
+    def checkAny(self, words:Iterable[str], checkL:Callable[[str,tuple],bool], check:bool, l:int, progress:bool, unique:bool):
         bs = []
         last = True
         uniqueWords = set()
@@ -55,8 +55,8 @@ class Ele:
             s = self.simulate(word)
             bs.append(s[0])
             if check:
-                c = checkL(word)
-                if c != s[0]:
+                c = checkL(word,s)
+                if c:
                     if progress:
                         print(("" if last else "\n") + "%-135s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))), end="" if progress else "\n")
                         last = False

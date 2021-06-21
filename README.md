@@ -15,10 +15,16 @@ concatenated of the single characters/symbols.
 | 1 | print transitions/productions read by pyformlang |
 | 2 | print output of (pdf) build tools |
 
-Tipp: You may use the `config.py` file to speficy `checkL(i:str)` a function to check if a word
-should be accepted or not (this can be a function using regexes, a static
-dictionary, or whatever you can imagine as long as it takes a string and returns
-a boolean (Tipp: a CFG is possible in here too, see comments in `config.py`)).
+Tipp: You may use the `config.py` file to speficy the `checkL_...(i:str)`
+functions to check if a simulation ran sucessfully or not (changed because of
+TMs and goto). Check the comments in the example `config.py` to see what the
+parameter `s` is about (representing the result of the simulation).
+These functions can use regexes, a static
+dictionary, or whatever you can imagine as long as it takes a input string, a
+tuple (the return of the simulation) and returns a boolean (this bool now
+represents if the simulation was successfully).
+
+Tipp: a CFG/... is possible in here too, see comments in `config.py`.
 
 When checking random words there are some parameters like startLength and
 endLength (words with lengths between these two numbers are generated). With the

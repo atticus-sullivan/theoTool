@@ -37,7 +37,7 @@ class GOTO:
                 self.currLbl = self.next[str(self.currLbl)]
             if self.funcs[str(ex)]() == 1:
                 break;
-        return self.getVal(str(self.retVar))
+        return self.getVal(str(self.retVar)), self.vars
 
     def specifyOrder(self, nxt:dict):
         self.next = nxt
