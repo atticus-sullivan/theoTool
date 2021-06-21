@@ -151,6 +151,48 @@ Note that the simulator uses one band by default. If you'd like to use more than
 one bands, check out the original simulator and/or reach out to me so that this
 feature is being implemented to this tool as well.
 
+goto.yaml
+-------
+See `exampleGOTO.yaml` for an example. Attention: This is not extensively tested.
+
+Required keys:
+- `procedure`: should be a dict of label -> commands (explained below)
+- `startLbl`: should be the label on which the programm starts
+- `inputVar`: should be the name of the variable into which the input is loaded
+- `retVar`: should be the name of the variable which is the output
+- `insert`: Should be a list of the valid input characters (used in random
+  generator)
+
+Optional keys:
+- `check`: should be list[str] with a list of strings that are to be checked
+
+Valid commands are:
+- var `:=` var/num
+- var `=` var/num `+` var/num
+- var `=` var/num `-` var/num
+- var `=` var/num `*` var/num
+- var `=` var/num `div` var/num
+- var `=` var/num `mod` var/num
+- `if` pred `goto` label
+- `goto` label
+
+Where pred might be one of the following:
+- var/num `=` var/num
+- var/num `!=` var/num
+- var/num `>=` var/num
+- var/num `<=` var/num
+- var/num `<` var/num
+- var/num `>` var/num
+
+
+Testing status:
+--------------
+I expect the modules based on pyformlang `fa`, `cfg`, `pda` to be good tested.
+The library for the `TM`s is copy paste from the Internet but bugs were already
+found. The `goto` lib is self-build and not that much tested.
+
+The latter two should be used with caution!!
+
 Credits
 -------
 Credits to [pyformlang](https://github.com/Aunsiels/pyformlang)
