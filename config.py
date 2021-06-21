@@ -22,12 +22,12 @@ def cfgContain(i:str):
 
 # s : (accepted:bool,[],[])
 def checkL_fa  (i:str, s:tuple) -> bool:
-    return True
+    return abEx(i) == s[0]
 
 # s : (True,texTree,linkableitung) or
 # s : (False,[],[])
 def checkL_pda (i:str, s:tuple) -> bool:
-    return True
+    return cfgContain(i) == s[0]
 
 # s : (True,texTree,linkableitung) or
 # s : (False,[],[])
@@ -41,7 +41,8 @@ def checkL_tm  (i:str, s:tuple) -> bool:
 
 # s: (value of the return variable, dict with all variables)
 def checkL_goto(i:str, s:tuple) -> bool:
-    return True
+    # checks if the goto programm correctly computes the amount of set bits
+    return "{0:b}".format(int(i)).count('1') == s[0]
 
 # s: (accepted:bool,[],[])
 def checkL_re  (i:str, s:tuple) -> bool:
