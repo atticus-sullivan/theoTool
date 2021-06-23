@@ -2,15 +2,51 @@ from gotoLib import GOTO
 from ele import Ele
 import yaml
 from functools import partial
+import re
 
 class Goto(Ele):
     
-    def __init__(self, aut:GOTO, ins:list[str], checks:list[str]):
+    def __init__(self, aut:GOTO, ins:list[str], checks:list[str], cmdS:list, labels:list):
         super().__init__(terminals=ins, checks=checks)
         self.goto = aut
+        self.cmdS = cmdS
+        self.labels = labels
+
+        for i,c in enumerate(cmdS):
+            cs = c[0].split()
+            if len(cs) == 2 and cs[0] == 'goto':
+                ind = labels.index(cs[1]) #TODO value error
+                cmdS[i] = (re.sub("(goto )(.*)", r"\1|\\ref{\2}|", c[0]),) + cmdS[i][1:]
+            elif len(cs) == 6 and cs[0] == 'if' and cs[4] == 'goto':
+                ind = labels.index(cs[5]) #TODO value error # where is the label
+                cmdS[i] = (re.sub("(if .* .* .* goto )(.*)", r"\1|\\ref{\2}|", c[0]),) + cmdS[i][1:]
+            else:
+                continue
+            cmdS[ind] += (labels[ind],)
 
     def simulate(self, i:str):
         return self.goto.run(i)
+
+    def toDot(self, f):
+        print("goto does no toDot()")
+        return False
+
+    def toTikz(self, f):
+        print("Latex building will need at least two runs (keep in mind that this tool will only make one run when -b is specified)")
+        print(r"\documentclass{standalone}", file=f)
+        print(r"\usepackage{listings}", file=f)
+        print("\n".join([r"\lstdefinelanguage{goto}{", r"morekeywords = {goto,if,halt},",
+            r"numberblanklines = false,",
+            r"keywordstyle={[1]\textbf},",
+            r"sensitive = false,",
+            r"morecomment = [l]{//},", r"morecomment = [s] {/*}{*/},",
+            r"morestring = [b]", r"}"]), file=f)
+
+        print(r"\begin{document}" + "\n" + r"\begin{lstlisting}[language=goto,escapechar=|,mathescape=true,numbers=left]", file=f)
+        for c in self.cmdS:
+            print(c[0], (r"|\label{%s}|" % ",".join(list(map(str,c[1:]))) ) if len(c[1:]) > 0 else "", file=f)
+        print(r"\end{lstlisting}" + "\n" + r"\end{document}", file=f)
+        return True
 
     @classmethod
     def loadYaml(cls, path:str, verbose:int):
@@ -33,6 +69,8 @@ class Goto(Ele):
             retVar = str(d['retVar'])
 
         goto = GOTO(startLbl=startLbl, inputVar=inputVar, retVar=retVar)
+        labels = []
+        cmdS   = []
 
         if 'procedure' not in d or not isinstance(d['procedure'], dict):
             raise KeyError("procedure key not defined in input or not a list")
@@ -42,6 +80,8 @@ class Goto(Ele):
             order = {}
             lastLbl = ""
             for l1,d1 in d['procedure'].items():
+                labels.append(l1)
+                cmdS.append((d1,))
                 order[lastLbl] = l1
                 lastLbl = l1
                 t = d1.split()
@@ -103,6 +143,6 @@ class Goto(Ele):
             for c in d['check']:
                 if not isinstance(c, str):
                     raise KeyError("element in check was not a string")
-            return Goto(aut=goto, checks=d['check'], ins=d['insert'])
+            return Goto(aut=goto, checks=d['check'], ins=d['insert'], cmdS=cmdS, labels=labels)
 
-        return Goto(aut=goto, checks=[], ins=d['insert'])
+        return Goto(aut=goto, checks=[], ins=d['insert'], cmdS=cmdS, labels=labels)
