@@ -53,7 +53,7 @@ if __name__ == "__main__":
             else:
                 raise Exception("checkL_fa not implemented")
         else:
-            checkL = lambda _,_: True # function is not relevant if check is not set
+            checkL = lambda _,u: True # function is not relevant if check is not set
     elif args.type in ['cfg']:
         ele = Cfg.loadYaml(args.inFile, args.verbose)
         if args.check:
@@ -62,7 +62,7 @@ if __name__ == "__main__":
             else:
                 raise Exception("checkL_cfg not implemented")
         else:
-            checkL = lambda _,_: True # function is not relevant if check is not set
+            checkL = lambda _,u: True # function is not relevant if check is not set
     elif args.type in ['pda']:
         ele = Pda.loadYaml(args.inFile, args.verbose)
         if args.check:
@@ -71,7 +71,7 @@ if __name__ == "__main__":
             else:
                 raise Exception("checkL_pda not implemented")
         else:
-            checkL = lambda _,_: True # function is not relevant if check is not set
+            checkL = lambda _,u: True # function is not relevant if check is not set
     elif args.type in ['re']:
         ele = RegularExpression.loadYaml(args.inFile, args.verbose)
         if args.check:
@@ -80,7 +80,7 @@ if __name__ == "__main__":
             else:
                 raise Exception("checkL_re not implemented")
         else:
-            checkL = lambda _,_: True # function is not relevant if check is not set
+            checkL = lambda _,u: True # function is not relevant if check is not set
     elif args.type in ['tm']:
         ele = Ndtm.loadYaml(args.inFile, args.verbose)
         if args.check:
@@ -89,7 +89,7 @@ if __name__ == "__main__":
             else:
                 raise Exception("checkL not implemented")
         else:
-            checkL = lambda _,_: True # function is not relevant if check is not set
+            checkL = lambda _,u: True # function is not relevant if check is not set
     elif args.type in ['goto']:
         ele = Goto.loadYaml(args.inFile, args.verbose)
         if args.check:
@@ -98,7 +98,7 @@ if __name__ == "__main__":
             else:
                 raise Exception("checkL not implemented")
         else:
-            checkL = lambda _,_: True # function is not relevant if check is not set
+            checkL = lambda _,u: True # function is not relevant if check is not set
     else:
         quit(-1)
 
