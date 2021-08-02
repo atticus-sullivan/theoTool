@@ -1,0 +1,23 @@
+delta:
+        - q0,a,q1
+        - q0,b,q0
+
+        - q1,a,q4
+        - q1,b,q2
+
+        - q2,a,q3
+        - q2,b,q1
+
+        - q3,a,q5
+        - q3,b,q1
+
+        - q4,a,q5
+        - q4,b,q2
+
+        - q5,a,q1
+        - q5,b,q5
+
+initial: q0
+accepting:
+        - q1
+        - q2

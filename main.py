@@ -42,12 +42,15 @@ if __name__ == "__main__":
     parser.add_argument("--yes", "-y", help="Answer 'yes' to overwrite questions -> programm is non interactive", action='store_true')
     parser.add_argument("--unique", "-u", help="Test words only once to get a more expressive stat. Note that NO additional Words are beeing generated (might cause a deadlock) if there are duplicates. The sample size is just smaller.", action='store_true')
     parser.add_argument("--cyk", help="Generate CYK table for words (be carefull, this might produce a lot of output when running not with a fixed input set)", action='store_true')
+    parser.add_argument("--mini", help="Generate minimization-table for DFA (be carefull, this might produce a lot of output when running not with a fixed input set)", action='store_true')
 
     args = parser.parse_args()
 
     if args.type in ['fa', 'dfa', 'nfa']:
         ele = AutomataRegul.loadYaml(args.inFile, args.verbose)
         print("regex:", ele.toRegex())
+        if args.mini: # minimize the FA (will fail if delta is not deterministic)
+            ele.minimize()
         if args.check:
             if hasattr(config, 'checkL_fa'):
                 checkL = config.checkL_fa

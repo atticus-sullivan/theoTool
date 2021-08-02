@@ -1,6 +1,8 @@
 import yaml
 from ele import Ele
 from pyformlang.finite_automaton import EpsilonNFA, State, Symbol, Epsilon
+from terminaltables import SingleTable
+import copy
 
 def make_tuple(i:str):
     s = i.split(",")
@@ -110,3 +112,74 @@ class AutomataRegul(Ele):
             return AutomataRegul(aut=enfa, checks=d['check'])
 
         return AutomataRegul(aut=enfa, checks=[])
+
+    def minimize(self):
+        states = list(self.enfa.states)
+        states.sort(key=lambda x : x.value)
+        tab = [[None for _ in states] for _ in states]
+        i = 0
+        statesDict = {}
+        for s in states:
+            statesDict[states[i]] = i
+            i += 1
+        for s1 in range(len(states)):
+            for s2 in range(len(states)):
+                if s2 > s1: break # only handle lower left triangle
+                if states[s1] not in self.enfa.final_states and states[s2] in self.enfa.final_states or states[s1] in self.enfa.final_states and states[s2] not in self.enfa.final_states:
+                    tab[s1][s2] = "ε"
+                    tab[s2][s1] = "ε"
+
+        changed = True
+        self.mini_tabToString(tab[:], states, False, "Step")
+        print()
+        while changed:
+            changed = False
+            for s1 in range(len(states)):
+                for s2 in range(len(states)):
+                    if s2 > s1: break # only handle lower left triangle
+                    if tab[s1][s2] is not None: continue # difference is already descided
+
+                    for w in sorted(self.terminals):
+                        s1D = self.enfa._get_next_states_iterable([states[s1]], w)
+                        s2D = self.enfa._get_next_states_iterable([states[s2]], w)
+                        if len(s1D) != 1 or len(s2D) != 1:
+                            print(s1D, s2D, w)
+                            raise Exception("FA is not DFA -> no minimization")
+                        s1D = s1D.pop()
+                        s2D = s2D.pop()
+                        if tab[statesDict[s1D]][statesDict[s2D]] is not None:
+                            if tab[statesDict[s1D]][statesDict[s2D]] == "ε":
+                                suff = w
+                            else:
+                                suff = w + tab[statesDict[s1D]][statesDict[s2D]]
+                            if tab[s1][s2] is None or len(suff) < len(tab[s1][s2]):
+                                print("Found (%s,%s) -%s> (%s,%s) to be different" % (states[s1],states[s2], w, s1D,s2D))
+                                tab[s1][s2] = suff
+                                tab[s2][s1] = suff
+                                changed = True
+            self.mini_tabToString(tab[:], states, False, "Step")
+            print()
+
+        self.mini_tabToString(tab[:], states, True, "Final")
+    
+    def mini_tabToString(self, tab, states, final, title):
+        tab = copy.deepcopy(tab)
+        for l,_ in enumerate(tab):
+            for c,_ in enumerate(tab[l]):
+                if c > l:
+                    tab[l][c] = ""
+                elif c == l:
+                    tab[l][c] = states[c]
+                elif tab[l][c] is None and final:
+                    tab[l][c] = "="
+
+        st = SingleTable(tab, title=title)
+        for i in range(len(tab[-1])):
+            st.justify_columns[i] = 'center'
+        st.inner_row_border=True
+        st.inner_heading_row_border=False
+        print(st.table)
+
+if __name__ == '__main__':
+    fa = AutomataRegul.loadYaml("projects/miniTesting/klausur2020.yaml", 0)
+    fa.minimize()
