@@ -56,7 +56,7 @@ class Ele:
             bs.append(s[0])
             if check:
                 c = checkL(word,s)
-                if c:
+                if not c:
                     if progress:
                         print(("" if last else "\n") + "%-135s" % " ".join(map(lambda x:str(x),("Wrong:", word, *s))), end="" if progress else "\n")
                         last = False
