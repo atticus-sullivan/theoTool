@@ -1,0 +1,8 @@
+prods:
+        - "S -> L B | x | S S"
+        - "L -> A S"
+        - "A -> a"
+        - "B -> b"
+
+checks:
+        - "xaxbx"

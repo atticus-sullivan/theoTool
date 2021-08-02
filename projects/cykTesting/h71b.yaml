@@ -1,0 +1,8 @@
+prods:
+        - "S -> S L | T S | H L | S T | L S | w | w"
+        - "L -> w | z"
+        - "T -> T T | w | S S | w"
+        - "H -> s | T L"
+
+checks:
+        - "zszwz"

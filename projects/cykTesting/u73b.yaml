@@ -1,0 +1,9 @@
+prods:
+        - "S -> v | S S | Y O"
+        - "Y -> K S"
+        - "O -> O U | U Y | d | S K"
+        - "K -> d"
+        - "U -> d | K U"
+
+checks:
+        - "ddvv"

@@ -1,0 +1,10 @@
+prods:
+  - "S -> F R | F A | a | G B | b"
+  - "R -> S G"
+  - "A -> F A | a"
+  - "B -> G B | b"
+  - "F -> a"
+  - "G -> b"
+
+checks:
+        - "aabba"

@@ -41,6 +41,7 @@ if __name__ == "__main__":
     parser.add_argument("--verbose", "-v", help="Be more verbose -vv... for even more verbosity (currently up to 2)", action='count', default=0)
     parser.add_argument("--yes", "-y", help="Answer 'yes' to overwrite questions -> programm is non interactive", action='store_true')
     parser.add_argument("--unique", "-u", help="Test words only once to get a more expressive stat. Note that NO additional Words are beeing generated (might cause a deadlock) if there are duplicates. The sample size is just smaller.", action='store_true')
+    parser.add_argument("--cyk", help="Generate CYK table for words (be carefull, this might produce a lot of output when running not with a fixed input set)", action='store_true')
 
     args = parser.parse_args()
 
@@ -56,6 +57,7 @@ if __name__ == "__main__":
             checkL = lambda _,u: True # function is not relevant if check is not set
     elif args.type in ['cfg']:
         ele = Cfg.loadYaml(args.inFile, args.verbose)
+        ele.cyk_on_sim = args.cyk # set if cyk should be executed when simulating
         if args.check:
             if hasattr(config, 'checkL_cfg'):
                 checkL = config.checkL_cfg
