@@ -22,7 +22,10 @@ def cfgContain(i:str):
 
 # s : (accepted:bool,[],[])
 def checkL_fa  (i:str, s:tuple) -> bool:
-    return abEx(i) == s[0]
+    if 'a' in i and s[0] is True:
+        return True
+    return False
+    # return abEx(i) == s[0]
 
 # s : (True,texTree,linkableitung) or
 # s : (False,[],[])
@@ -53,13 +56,13 @@ def checkL_re  (i:str, s:tuple) -> bool:
 # maybe you'd like to choose a linear or a quadratic function
 # abs_w represents the amount of terminals that are being tested
 def cntPerLength(l:int,abs_w:int) -> int:
-    return cntAll(l, abs_w)
-    # return cntRand(l)
+    # return cntAll(l, abs_w)
+    return cntRand(l)
 
 def cntAll(l:int, abs_w:int) -> int:
     return abs_w**l
 
-def cntRand(l:int, abs_w:int) -> int:
+def cntRand(l:int) -> int:
     return l+1
 
 # only in effect, if no checks argument is given in the input yaml
