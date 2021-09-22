@@ -42,7 +42,7 @@ class Cfg(Ele):
             forr = self.cfg.get_cnf_parse_tree(l)
             r = (self.ablForest(forr, 0), forr.get_leftmost_derivation())
         self.ts.append((i,r[0],r[1]))
-        if self.cyk:
+        if self.cyk_on_sim:
             self.cyk(i)
         return accepted,[],r[1]
 
@@ -74,7 +74,7 @@ class Cfg(Ele):
                 print(str(d).replace("#", "-") + r"\\[0cm]", file=f)
             print(r"\end{page}", file=f)
         print(r"\end{document}", file=f)
-        return true
+        return True
 
     def ablForest(self,tree:ParseTree, lvl:int):
         acc = []
@@ -105,12 +105,12 @@ class Cfg(Ele):
                     ret.add(p.head)
         return ret
 
-    def cyk(self, s:str) -> bool:
+    def cyk(self, s:str):
         cfg = self.cfg.to_normal_form()
         print(cfg.to_text())
         tab = [[Terminal(x) for x in s]]
         new = [[self.cyk_init(x, cfg) for x in y] for y in tab]
-        tab = new + tab
+        tab = new + tab # tab is the existing table and new is the set of step1 since the elements are simply printed, it is no problem that one contains a set and one only literals
         while len(tab[0])-1 >= 1: # go lines up
             tabNewLine = []
             print()
@@ -131,7 +131,6 @@ class Cfg(Ele):
             tab = [tabNewLine] + tab
         print("\n")
         self.cyk_tabToString(tab, "Final")
-        return ""
     
     def cyk_tabToString(self, tab, title):
         tableString = [[str(x) for x in y] for y in tab]
