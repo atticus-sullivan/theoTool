@@ -1,9 +1,9 @@
-decorator==4.4.2
-greenlet==1.1.0
-msgpack==1.0.2
-networkx==2.5.1
-numpy==1.20.3
+decorator==5.1.0
+greenlet==1.1.2
+msgpack==1.0.3
+networkx==2.6.3
+numpy==1.21.4
 pydot==1.4.2
-pyformlang==0.1.24
-pyparsing==2.4.7
-terminaltables==3.1.0
+pyformlang==0.1.26
+pyparsing==3.0.6
+PyYAML==6.0
